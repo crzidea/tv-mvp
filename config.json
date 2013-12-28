@@ -4,10 +4,10 @@
         "host": "",
         "password": ""
     },
-    "keyPrefix": "share:",
-    "idKey": "shareid",
+    "keyPrefix": "tv-mvp:",
+    "idKey": "tv-mvp-current-id",
     "sessionSecret": "secret",
     "sessionTtl": 86400,
-    "deadline": "2013-12-5",
+    "deadline": "2014-1-9",
     "port": 8080
 }

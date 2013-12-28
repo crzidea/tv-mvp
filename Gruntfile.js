@@ -5,7 +5,7 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     watch: {
       scripts: {
-        files: ['*'],
+        files: ['**'],
         options: {
           livereload: true
         },
@@ -14,7 +14,7 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks('grunt-contrib-watch');
-  
+
   // Default task(s).
   grunt.registerTask('default', ['watch']);
 

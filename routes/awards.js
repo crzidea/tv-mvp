@@ -3,26 +3,35 @@ var redisClient = require('../lib/redis'),
   keyPrefix = config.keyPrefix;
 
 /**
- * GET: /share
+ * GET: /awards(/:id)
  */
-exports.persons = function(req, res) {
-  var share = [];
+exports.list = function(req, res) {
+  var exp = req.params.type ?
+    keyPrefix + req.params.type + ':*' :
+    keyPrefix + '*';
+  console.log('award list:', exp);
+
   redisClient.keys(
-    keyPrefix + req.params.id + ':*',
+    exp,
     function(err, replies) {
       if (err) return;
-      var got = 0;
-      replies.forEach(function(key) {
-        redisClient.hgetall(key, function(err, reply) {
-          try {
-            reply.subjects = JSON.parse(reply.subjects);
-          } catch (e) {
-            console.log(key);
-          }
-          share.push(reply);
-          ++got == replies.length && res.json(share);
+      if (replies.length) {
+        var got = 0;
+        var persons = [];
+        replies.forEach(function(key) {
+          redisClient.hgetall(key, function(err, reply) {
+            try {
+              reply.details = JSON.parse(reply.details);
+            } catch (e) {
+              console.log(key);
+            }
+            persons.push(reply);
+            ++got == replies.length && res.json(persons);
+          })
         })
-      })
+      } else {
+        res.json([])
+      }
     }
   )
-};
+}

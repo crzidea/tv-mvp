@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -14,34 +14,30 @@
     <![endif]-->
 
     <title>讲师信息管理</title>
-    <script src="javascripts/jquery.js"></script>
-    <script src="javascripts/angular.min.js"></script>
-    <script src="javascripts/angular-resource.min.js"></script>
-    <script src="javascripts/share-ctrl.js"></script>
+    <script src="/lib/jquery/jquery.js"></script>
+    <script src="/lib/angular/angular.min.js"></script>
+    <script src="/lib/angular-resource/angular-resource.min.js"></script>
+    <script src="/javascripts/person-ctrl.js"></script>
     <style type="text/css" media="screen">
         .del-true {
           text-decoration: line-through;
           color: grey;
         }
     </style>
+    <script src="//10.2.25.187:35729/livereload.js"></script>
 </head>
 <body ng-app="app" id="ng-app">
-    <div class="container" ng-controller="ShareCtrl">
+    <div class="container" ng-controller="PersonCtrl">
         <div class="row form-group">
             <form ng-submit="add()">
-                <input class="col-md-1" type="text" ng-model="speaker" placeholder="讲师">
-                <input class="col-md-8" type="text" ng-model="img" placeholder="图片链接">
+                <input class="col-md-1" type="text" ng-model="person.name" placeholder="讲师">
+                <input class="col-md-1" type="text" ng-model="person.award" placeholder="奖项">
+                <input class="col-md-1" type="text" ng-model="person.dep1" placeholder="一级部门">
+                <input class="col-md-1" type="text" ng-model="person.dep2" placeholder="二级部门">
+                <input class="col-md-5" type="text" ng-model="person.img" placeholder="图片链接">
                 <button class="col-md-1 btn-success" type="submit">添加</button>
+                <input class="col-md-12" type="text" ng-model="person.details" placeholder="阐述">
             </form>
-            <button class="col-md-1 btn-primary" ng-click="addSub()">添加主题</button>
-            <button class="col-md-1 btn-danger" ng-click="del()">删除</button>
-        </div>
-        <div class="row form-group" id="sub-form">
-            <div class="col-md-12" ng-repeat="s in subjects">
-                <input class="col-md-3" type="text" ng-model="s.name" placeholder="主题">
-                <input class="col-md-2" type="text" ng-model="s.date" placeholder="日期">
-                <input class="col-md-7" type="text" ng-model="s.link" placeholder="链接">
-            </div>
         </div>
 
         <div class="row panel panel-default">
@@ -83,6 +79,6 @@
             </li>
         </ul>
     </div>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

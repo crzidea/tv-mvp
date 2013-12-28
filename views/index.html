@@ -2,130 +2,77 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <title>创新思享汇-2013年度讲师评选</title>
     <!--[if lt IE 9]>
     <script type="text/javascript">location.href='./ie.html';</script>
     <![endif]-->
-    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="./bootstrap/css/bootstrap-theme.min.css" type="text/css">
-    <link rel="stylesheet" href="./resources/style.css" type="text/css">
-    <script type="text/javascript" src="./javascripts/jquery.js"></script>
-    <script type="text/javascript" src="./javascripts/angular.min.js"></script>
-    <script type="text/javascript" src="./javascripts/angular-resource.min.js"></script>
-    <script type="text/javascript" src="./javascripts/share-ctrl.js"></script>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap-theme.min.css" type="text/css">
+    <link rel="stylesheet" href="/resources/style.css" type="text/css">
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/lib/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/lib/angular-resource/angular-resource.min.js"></script>
+    <script type="text/javascript" src="/javascripts/award-ctrl.js"></script>
+    <script src="//10.2.25.187:35729/livereload.js"></script>
 </head>
 <body ng-app="app" id="ng-app">
 <div class="container" style="padding: 0;">
     <img style="width: 100%" src="http://vote4share.u.qiniudn.com/banner.jpg">
 </div>
 <div class="container"> 
-    <div class="row" ng-controller="ShareCtrl">
-        <div class="col-md-10">
-            <div style="height: 30px;"></div>
-            <div class="row" id="main-share">
-                <ul class="list-unstyled">
-                    <li class="li-share col-md-6 change" ng-repeat="s in share" id="share{{s.id}}" count-share="">
-                        <div class="col-md-5 img"><i></i>
-                            <img class="img-rounded" ng-src="{{s.img}}?imageView/1/h/190/w/190/format/png" alt="{{s.name}}">
-                        </div>
-                        <div class="col-md-7 share">
-                            <div class="photo_grid_author">讲师： {{s.speaker}}</div>
-                            <div class="voteBar">得票： {{s.votes}}</div>
-                            <div class="voteBar2"><a ng-click="vote(s)" href="">
-                                <img src="./resources/votebutton.gif" width="77"
-                                 height="22" id="vbut{{s.id}}" name="vbut{{s.id}}"></a>
-                            </div>
-                            <div class="photo_grid_author">主题：
-                                <ul>
-                                    <li ng-repeat="sub in s.subjects">
-                                        <a href="{{sub.link}}" class="a_an" target="_blank"
-                                           title="{{sub.name}}">{{sub.date}}<br>{{sub.name}}</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+    <div class="row" ng-controller="AwardCtrl">
+        <div style="height: 30px;"></div>
+
+        <ul class="nav nav-tabs">
+            <li ng-repeat="a in awards"><a data-toggle="tab" href="#award-{{a.type}}">{{a.desc}}</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane fade" ng-repeat="a in awards" id="award-{{a.type}}">
+
+<div class="row">
+    <ul class="list-unstyled">
+        <li class="li-share col-md-6" ng-repeat="p in a.persons" id="share{{p.id}}" count-share="">
+            <div class="col-md-5 img" data-toggle="modal" data-target="#person-{{p.id}}"><i></i>
+                <img class="img-rounded" ng-src="{{p.img}}?imageView/1/h/190/w/190/format/png" alt="{{p.name}}">
             </div>
-            <div class="blank10"></div>
-            <div class="blank10"></div>
-
-        </div>
-        <!-- end left -->
-        <div class="col-md-2">
-            <h3 class="change_h3">排行榜</h3>
-
-            <div class="row"></div>
-
-            <div class="row">
-                <div class="up_none"></div>
-                <div class="scroll_box2">
-                    <ul class="list-unstyled">
-                        <li class="row li-ranking" ng-repeat="s in rankList">
-                            <div class="col-md-7 img-ranking">
-                                <a href="#share{{s.id}}">
-                                    <img class="img-circle" ng-src="{{s.img}}?imageView/1/h/113/w/113" alt="{{s.name}}">
-                                </a>
-                            </div>
-                            <div class="col-md-5 ranking-info">
-                                <span class="num{{s.ranking}}"></span>
-                                <a href="#share{{s.id}}" class="a_top">
-                                    <span>{{s.speaker}}</span>
-                                </a>
-                                <div class="ranking-votes">得票:<span class="f_orange">{{s.votes}}</span></div>
-                            </div>
-                        </li>
-                    </ul>
+            <div class="col-md-7 share">
+                <div class="photo_grid_author">{{p.name}}</div>
+                <div class="photo_grid_author">一级部门： {{p.dep1}}</div>
+                <div class="photo_grid_author">二级部门 {{p.dep2}}</div>
+                <div class="voteBar">得票： {{p.votes}}</div>
+                <div class="voteBar2"><a ng-click="vote(p)" href="">
+                    <img src="/resources/votebutton.gif" width="77"
+                     height="22" id="vbut{{p.id}}" name="vbut{{p.id}}"></a>
                 </div>
-                <div class="down_none"></div>
+            </div>
+            <div class="modal fade" id="person-{{p.id}}" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        {{p.details}}
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+
             </div>
         </div>
-        <!-- end right -->
+            <div class="col-md-12"> </div>
+            <div class="blank10"></div>
+            <div class="blank10"></div>
+        </div>
     </div>
     <!-- end contentC -->
 </div>
-<script type="text/javascript" src="./bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-
-var container = document.getElementById("main-share");
-
-function selectSmall(arr) {
-    var len = arr.length;
-    var j = 0;
-    for (var i = 1; i < len; i++) {
-        if (arr[i] < arr[j]) {
-            j = i;
-        }
-    }
-    return j;
-}
-
-function rankList() {
-    var heights = [0, 0];
-    var changeList = $(".change");
-    var len = changeList.length;
-    for (var i = 0; i < len; i++) {
-        var nth = selectSmall(heights);
-        changeList[i].style.top = heights[nth] + 'px';
-        changeList[i].style.left = nth * ($(container).width() * 48 / 100) + 'px';
-        heights[nth] = heights[nth] + $(changeList[i]).height() + 52;
-
-    }
-}
-
-window.onresize = rankList;
-var shareLoaded = 0;
-app.directive('countShare', function() {
-    return {
-        link: function($scope) {
-            if (++shareLoaded == $scope.share.length) {
-                setTimeout(rankList, 0);
-            }
-        }
-    }
-})
-
+    angular.element(document).ready(function() {
+        $('.nav-tabs a:first').tab('show');
+    })
 </script>
 </body>
 </html>

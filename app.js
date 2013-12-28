@@ -51,11 +51,12 @@ if (cluster.isMaster) {
 
     app.get('/', routes.index);
 
-    // app.get('/awards', routes.awards.list);
-    app.get('/awards/:id', routes.awards.persons);
+    app.get('/awards', routes.awards.list);
+    app.get('/awards/:type', routes.awards.list);
+    app.get('/persons', routes.awards.list);
     app.post('/persons', routes.persons.add);
     app.post('/persons/:id/votes', routes.persons.votes);
-    // app.delete('/persons/:id', routes.persons.del);
+    app.delete('/persons/:id', routes.persons.del);
 
     http.createServer(app).listen(app.get('port'), function() {
         console.log('Express server listening on port ' + app.get('port'));
