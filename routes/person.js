@@ -3,32 +3,6 @@ var redisClient = require('../lib/redis'),
     keyPrefix = config.keyPrefix,
     idKey = config.idKey,
     deadline = new Date(config.deadline);
-
-/**
- * GET: /share
- */
-exports.list = function(req, res) {
-    var share = [];
-    redisClient.keys(
-        keyPrefix + '*',
-        function(err, replies) {
-            if (err) return;
-            var got = 0;
-            replies.forEach(function(key) {
-                redisClient.hgetall(key, function(err, reply) {
-                    try {
-                        reply.subjects = JSON.parse(reply.subjects);
-                    } catch (e) {
-                        console.log(key);
-                    }
-                    share.push(reply);
-                    ++got == replies.length && res.json(share);
-                })
-            })
-        }
-    )
-};
-
 /**
  * POST /share/:id/votes
  */
@@ -39,7 +13,6 @@ exports.votes = function(req, res) {
         })
         return
     }
-
     var remoteAddr = req.headers['x-real-ip'];
     redisClient.get('ip:' + remoteAddr, function(err, reply) {
         if (reply || !req.session.voteAccess || req.session.voted) {
@@ -62,7 +35,6 @@ exports.votes = function(req, res) {
         }
     })
 };
-
 /**
  * POST /share
  */
@@ -71,7 +43,6 @@ exports.add = function(req, res) {
         req.body.id = id;
         req.body.votes = 0;
         req.body.subjects = JSON.stringify(req.body.subjects);
-
         redisClient.hmset(keyPrefix + id, req.body, function(err, reply) {
             if (err) return;
             res.json({
@@ -80,7 +51,6 @@ exports.add = function(req, res) {
         })
     })
 };
-
 /**
  * DELETE /share/:id
  */

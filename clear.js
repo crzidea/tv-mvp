@@ -6,7 +6,7 @@ redisClient.keys(
 	function(err, replies) {
 		if (err) return;
 		replies.forEach(function(key) {
-			redisClient.hset(key, 'votes', 0, function (argument) {
+			redisClient.hset(key, 'votes', 0, function(argument) {
 				console.log('set votes of ', key, '0');
 			})
 		})
