@@ -34,6 +34,28 @@ app.controller('AwardCtrl', function($scope, $resource) {
         persons: awardPersons[2]
     }];
 
+    $scope.person = {
+        name: 'name',
+        award: 'award',
+        dep1: 'dep1',
+        dep2: 'dep2',
+        details: 'details',
+        hidden: true
+    };
+    $scope.award = {
+        desc: '个人奖项描述'
+    };
+    $scope.showPersonDetails = function(person) {
+        $scope.award.hidden = true;
+        $scope.person = person;
+        $scope.person.hidden = false;
+    }
+    $scope.showAwardDetails = function(award) {
+        $scope.person.hidden = true;
+        $scope.award = award;
+        $scope.award.hidden = false;
+    }
+
     $scope.vote = function(person) {
         var votes,
             conf = '支持 ' + person.name + ' ？';
