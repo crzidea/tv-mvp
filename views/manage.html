@@ -28,19 +28,7 @@
 </head>
 <body ng-app="app" id="ng-app">
     <div class="container" ng-controller="PersonCtrl">
-        <div class="row form-group">
-            <form ng-submit="add()">
-                <input class="col-md-1" type="text" ng-model="person.name" placeholder="讲师">
-                <input class="col-md-1" type="text" ng-model="person.award" placeholder="奖项">
-                <input class="col-md-1" type="text" ng-model="person.dep1" placeholder="一级部门">
-                <input class="col-md-1" type="text" ng-model="person.dep2" placeholder="二级部门">
-                <input class="col-md-5" type="text" ng-model="person.img" placeholder="图片链接">
-                <button class="col-md-1 btn-success" type="submit">添加</button>
-                <input class="col-md-12" type="text" ng-model="person.details" placeholder="阐述">
-            </form>
-        </div>
-
-        <div class="row panel panel-default">
+        <div class="row panel panel-default" style="margin-top: 20px;">
             <ul>
                 温馨提示：
                 <li>需要上传文件的同学请访问 <a href="http://qiniu.com" target="_blank">七牛云存储</a>, 不是广告，超级好用！还可以自动压缩比例。</li>
@@ -50,32 +38,39 @@
             </ul>
         </div>
 
+        <div class="row form-group">
+            <form ng-submit="add()">
+                <input class="col-md-1" type="text" ng-model="person.name" placeholder="名称">
+                <input class="col-md-1" type="text" ng-model="person.award" placeholder="参奖类别">
+                <input class="col-md-1" type="text" ng-model="person.dep1" placeholder="一级部门">
+                <input class="col-md-1" type="text" ng-model="person.dep2" placeholder="二级部门">
+                <input class="col-md-3" type="text" ng-model="person.details" placeholder="阐述">
+                <input class="col-md-3" type="text" ng-model="person.img" placeholder="图片链接">
+                <button class="col-md-1 btn-success" type="submit">添加</button>
+                <button class="col-md-1 btn-danger" type="button" ng-click="del()">删除选中</button>
+            </form>
+        </div>
+
         <ul class="list-unstyled">
             <li class="row">
                 <span class="col-md-1">#</span>
-                <span class="col-md-1">讲师</span>
-                <span class="col-md-8">
-                    <div class="row">
-                        <span class="col-md-4">主题</span>
-                        <span class="col-md-2">日期</span>
-                        <span class="col-md-6">链接</span>
-                    </div>
-                </span>
+                <span class="col-md-1">名称</span>
+                <span class="col-md-1">参奖类别</span>
+                <span class="col-md-1">一级部门</span>
+                <span class="col-md-1">二级部门</span>
+                <span class="col-md-5">阐述</span>
                 <span class="col-md-2">图片</span>
             </li>
-            <li class="row" ng-repeat="s in share">
+            <li class="row" ng-repeat="p in persons">
                 <span class="col-md-1">
-                    <input type="checkbox" ng-model="s.del">
+                    <input type="checkbox" ng-model="p.del">
                 </span>
-                <span class="col-md-1 del-{{s.del}}">{{s.speaker}}</span>
-                <span class="col-md-8">
-                    <div class="row" ng-repeat="sub in s.subjects">
-                        <span class="col-md-4 del-{{s.del}}">{{sub.name}}</span>
-                        <span class="col-md-2 del-{{s.del}}">{{sub.date}}</span>
-                        <a class="col-md-6 del-{{s.del}}" href="{{s.link}}">{{sub.link}}</a>
-                    </div>
-                </span>
-                <img class="col-md-2" ng-src="{{s.img}}?imageView/2/w/150/h/150" alt="{{s.name}}">
+                <span class="col-md-1 del-{{p.del}}">{{p.name}}</span>
+                <span class="col-md-1 del-{{p.del}}">{{p.award}}</span>
+                <span class="col-md-1 del-{{p.del}}">{{p.dep1}}</span>
+                <span class="col-md-1 del-{{p.del}}">{{p.dep2}}</span>
+                <span class="col-md-5 del-{{p.del}}">{{p.details}}</span>
+                <img class="col-md-2" ng-src="{{p.img}}?imageView/2/w/150/h/150" alt="{{p.name}}">
             </li>
         </ul>
     </div>

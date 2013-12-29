@@ -1,62 +1,35 @@
-var app = angular.module('app', ['ngResource']),
-    rankingLength = 10,
-    Share;
+var app = angular.module('app', ['ngResource']);
 
 app.controller('PersonCtrl', function($scope, $resource) {
 
-
     var Person = $resource('persons/:id', {
-        id: '@id'
-    });
-    var Votes = $resource('persons/:id/votes', {
         id: '@id'
     });
 
     $scope.persons = Person.query();
 
-    $scope.vote = function(share) {
-
-        var votes,
-            conf = '支持讲师 ' +
-                share.speaker + ' ？';
-
-        if (confirm(conf)) {
-            Votes.save({
-                id: share.id
-            }, function(data) {
-                switch (data.votes) {
-                    case -1:
-                        alert('您今天已经投过票了，谢谢参与！');
-                        break;
-                    case -2:
-                        alert('投票已经结束，谢谢参与！');
-                        break;
-                    default:
-                        share.votes = data.votes;
-                        rank();
-                        break;
-                }
-            });
-        };
-
-    };
-
     $scope.person = {};
     $scope.add = function() {
-        Person.save($scope.person, function(person) {
-            $scope.persons.push(person);
+        var person = {};
+        $scope.person.name = $scope.person.name || '这是某人的名字';
+        $scope.person.award = $scope.person.award || 1;
+        $scope.person.dep1 = $scope.person.dep1 || '某一级部门';
+        $scope.person.dep2 = $scope.person.dep2 || '某二级部门';
+        $scope.person.details = $scope.person.details || '阐述字数不要太多或太少';
+        $scope.person.img = $scope.person.img || 'http://crzidea.u.qiniudn.com/head.jpg';
+
+        Person.save($scope.person, function() {
+            $scope.persons.push($scope.person);
             $scope.person = {};
         })
     };
     $scope.del = function() {
-        var oldShare = $scope.share;
-        $scope.share = [];
-        angular.forEach(oldShare, function(s) {
-            if (!s.del) $scope.share.push(s);
-            else Share.remove({
-                id: s.id
-            });
+        var newList = [];
+        $scope.persons.map(function(p) {
+            if (p.del) p.$delete();
+            else newList.push(p);
         });
+        $scope.persons = newList;
     };
 
 

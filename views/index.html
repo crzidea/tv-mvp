@@ -32,32 +32,32 @@
         <div class="tab-content">
             <div class="tab-pane fade" ng-repeat="a in awards" id="award-{{a.type}}">
 
-<div class="row">
-    <ul class="list-unstyled">
-        <li class="li-share col-md-6" ng-repeat="p in a.persons" id="share{{p.id}}" count-share="">
-            <div class="col-md-5 img" data-toggle="modal" data-target="#person-{{p.id}}"><i></i>
-                <img class="img-rounded" ng-src="{{p.img}}?imageView/1/h/190/w/190/format/png" alt="{{p.name}}">
+            <div class="row">
+                <ul class="list-unstyled">
+                    <li class="li-share col-md-6" ng-repeat="p in a.persons" id="share{{p.id}}" count-share="">
+                        <div class="col-md-5 img" data-toggle="modal" data-target="#person-{{p.id}}"><i></i>
+                            <img class="img-rounded" ng-src="{{p.img}}?imageView/1/h/190/w/190/format/png" alt="{{p.name}}">
+                        </div>
+                        <div class="col-md-7 share">
+                            <div class="photo_grid_author">{{p.name}}</div>
+                            <div class="photo_grid_author">一级部门： {{p.dep1}}</div>
+                            <div class="photo_grid_author">二级部门 {{p.dep2}}</div>
+                            <div class="voteBar">得票： {{p.votes}}</div>
+                            <div class="voteBar2"><a ng-click="vote(p)" href="">
+                                <img src="/resources/votebutton.gif" width="77"
+                                 height="22" id="vbut{{p.id}}" name="vbut{{p.id}}"></a>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="person-{{p.id}}" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    {{p.details}}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
-            <div class="col-md-7 share">
-                <div class="photo_grid_author">{{p.name}}</div>
-                <div class="photo_grid_author">一级部门： {{p.dep1}}</div>
-                <div class="photo_grid_author">二级部门 {{p.dep2}}</div>
-                <div class="voteBar">得票： {{p.votes}}</div>
-                <div class="voteBar2"><a ng-click="vote(p)" href="">
-                    <img src="/resources/votebutton.gif" width="77"
-                     height="22" id="vbut{{p.id}}" name="vbut{{p.id}}"></a>
-                </div>
-            </div>
-            <div class="modal fade" id="person-{{p.id}}" role="dialog" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        {{p.details}}
-                    </div>
-                </div>
-            </div>
-        </li>
-    </ul>
-</div>
 
             </div>
         </div>

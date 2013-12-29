@@ -68,8 +68,14 @@ exports.add = function(req, res) {
  * DELETE /persons/:id
  */
 exports.del = function(req, res) {
-    redisClient.del(keyPrefix + req.params.id, function(err, reply) {
-        if (err) return;
-        res.json(reply);
+    redisClient.keys(keyPrefix + '*:' + req.params.id, function(err, keys) {
+        if (keys.length != 1) {
+            res.json(-1);
+            return
+        }
+        redisClient.del(keys[0], function(err, reply) {
+            if (err) return;
+            res.json(reply);
+        })
     })
 };
