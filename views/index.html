@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap-theme.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/style.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
     <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/lib/angular/angular.min.js"></script>
     <script type="text/javascript" src="/lib/angular-resource/angular-resource.min.js"></script>
@@ -28,31 +29,30 @@
     <div class="container" style="padding: 0;">
         <img style="width: 100%" src="http://vote4share.u.qiniudn.com/banner.jpg">
         <div style="height: 30px;"></div>
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs nav-red">
             <li class="col-md-6 text-center" ng-repeat="a in awards">
-                <a data-toggle="tab" href="#award-{{a.type}}">{{a.desc}}</a>
+                <a data-toggle="tab" href="#award-{{a.type}}" class="a-red">{{a.desc}}</a>
             </li>
         </ul>
     </div>
 </header>
 
 <div class="container"> 
-    <div class="col-md-8">
+    <div class="col-md-9 width-8">
         <div class="tab-content">
             <div class="tab-pane fade" ng-repeat="a in awards" id="award-{{a.type}}">
 
                     <ul class="list-unstyled">
-                        <li class="li-share col-md-6" ng-repeat="p in a.persons" id="share{{p.id}}" count-share="">
-                            <div class="col-md-5 img" ng-mouseenter="showPersonDetails(p)" ng-mouseleave="showAwardDetails(a)"><i></i>
-                                <img class="img-rounded" ng-src="{{p.img}}?imageView/1/h/190/w/190/format/png" alt="{{p.name}}">
+                        <li class="li-share col-md-6 items_li" ng-repeat="p in a.persons" id="share{{p.id}}" count-share="">
+                            <div class="col-md-5 img img_left" ng-mouseenter="showPersonDetails(p)" ng-mouseleave="showAwardDetails(a)"><i></i>
+                                <img class="img-rounded img_size" ng-src="{{p.img}}?imageView/3/h/240/w/240/format/png" alt="{{p.name}}">
                             </div>
-                            <div class="col-md-7 share">
-                                <div class="photo_grid_author">{{p.name}}</div>
-                                <div class="voteBar">得票： {{p.votes}}</div>
-                                <div class="voteBar2"><a ng-click="vote(p)" href="">
-                                    <img src="/resources/votebutton.gif" width="77"
-                                     height="22" id="vbut{{p.id}}" name="vbut{{p.id}}"></a>
-                                </div>
+                            <div class="col-md-7 share shade">
+                                <div class="photo_grid_author person_details">{{p.name}}</div>
+                                <div class="voteBar person_details">得票： {{p.votes}}</div>
+                                
+                                  <a ng-click="vote(p)" href="" class="votes"><span>我要<br>投票</span></a>
+                                
                             </div>
                         </li>
                     </ul>
@@ -61,14 +61,21 @@
         </div>
     </div>
 
-    <div class="col-md-4" id="details">
+    <div class="col-md-3" id="details">
         <div data-spy="affix" data-offset-top="425" style="top: 0;">
-            <div class="row hidden-{{award.hidden}}">{{award.desc}}</div>
-            <div class="row  hidden-{{person.hidden}}">{{person.name}}</div>
-            <div class="row  hidden-{{person.hidden}}">{{person.dep1}}</div>
-            <div class="row  hidden-{{person.hidden}}">{{person.dep2}}</div>
-            <div class="row  hidden-{{person.hidden}}">简介：</div>
-            <div class="row  hidden-{{person.hidden}}">{{person.details}}</div>
+            <div class="row right hidden-{{award.hidden}}">
+                <div class="titles">奖项说明</div>
+                <div class="discribtion">{{award.desc}}</div>
+            </div>
+            <div class="row right hidden-{{person.hidden}}">
+              <div class="person_wrapper">
+                <div class="titles">{{person.name}}</div>
+                <div class="discribtion">{{person.dep1}}</div>
+                <div class="discribtion">{{person.dep2}}</div>
+              </div>
+                <div class="titles titles_top">简介：</div>
+                <div class="discribtion">{{person.details}}</div>
+            </div>
         </div>
     </div>
     <!-- end contentC -->
